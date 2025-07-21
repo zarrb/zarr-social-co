@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
         showPreloader();
         try {
             const { token } = userInfo;
-            const summaryUrl = `http://localhost:5001/api/analytics/summary?days=${days}`;
-            const chartsUrl = `http://localhost:5001/api/analytics/charts?days=${days}`;
+            const summaryUrl = `http://51.21.171.18:5001/api/analytics/summary?days=${days}`;
+            const chartsUrl = `http://51.21.171.18:5001/api/analytics/charts?days=${days}`;
 
             // Fetch both sets of data concurrently
             const [summaryResponse, chartsResponse] = await Promise.all([
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const postItem = document.createElement('div');
             postItem.classList.add('top-post-item');
             postItem.innerHTML = `
-                <img src="http://localhost:5001${post.mediaUrls[0]}" alt="Post thumbnail" onerror="this.src='https://placehold.co/40x40/eeeeee/cccccc?text=Img';">
+                <img src="http://51.21.171.18:5001${post.mediaUrls[0]}" alt="Post thumbnail" onerror="this.src='https://placehold.co/40x40/eeeeee/cccccc?text=Img';">
                 <div class="top-post-item-details">
                     <div class="top-post-item-title">${(post.caption || 'No Caption').substring(0, 50)}...</div>
                     <div class="top-post-item-metrics">

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fetchMyBrandDetails = async () => {
         try {
             const { token } = userInfo;
-            const response = await fetch('http://localhost:5001/api/users/mybrand', {
+            const response = await fetch('http://51.21.171.18:5001/api/users/mybrand', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!response.ok) throw new Error('Could not fetch brand details.');
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (preloader) preloader.style.display = 'flex';
         try {
             const { token } = userInfo;
-            const response = await fetch('http://localhost:5001/api/analytics/products', {
+            const response = await fetch('http://51.21.171.18:5001/api/analytics/products', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 

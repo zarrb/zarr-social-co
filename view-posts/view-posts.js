@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const { token } = userInfo;
             const statusParam = currentStatus === 'all' ? '' : `&status=${currentStatus}`;
             const keywordParam = currentKeyword ? `&keyword=${encodeURIComponent(currentKeyword)}` : '';
-            const url = `http://localhost:5001/api/posts?pageNumber=${currentPage}${statusParam}${keywordParam}`;
+            const url = `http://51.21.171.18:5001/api/posts?pageNumber=${currentPage}${statusParam}${keywordParam}`;
             const response = await fetch(url, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const statusClass = (post.status || 'draft').toLowerCase();
             row.innerHTML = `
                 <td class="col-thumbnail">
-                    <img src="http://localhost:5001${post.mediaUrls[0]}" alt="Thumbnail" onerror="this.src='https://placehold.co/45x45/eeeeee/cccccc?text=Img';">
+                    <img src="http://51.21.171.18:5001${post.mediaUrls[0]}" alt="Thumbnail" onerror="this.src='https://placehold.co/45x45/eeeeee/cccccc?text=Img';">
                 </td>
                 <td class="col-title" title="${post.caption || ''}">
                     ${(post.caption || 'No Caption').substring(0, 70)}...
@@ -155,14 +155,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const { token } = userInfo;
-            const response = await fetch(`http://localhost:5001/api/posts/${postId}`, {
+            const response = await fetch(`http://51.21.171.18:5001/api/posts/${postId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!response.ok) throw new Error('Could not fetch post details.');
             const postData = await response.json();
 
             // Populate modal with fetched data
-            detailModalMediaContainer.innerHTML = `<img src="http://localhost:5001${postData.mediaUrls[0]}" onerror="this.src='https://placehold.co/400x400/eeeeee/cccccc?text=Media';">`;
+            detailModalMediaContainer.innerHTML = `<img src="http://51.21.171.18:5001${postData.mediaUrls[0]}" onerror="this.src='https://placehold.co/400x400/eeeeee/cccccc?text=Media';">`;
             detailModalPostCaption.textContent = postData.caption || 'No caption provided.';
 
             if (postData.linkedProducts && postData.linkedProducts.length > 0) {
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
                     try {
                         const { token } = userInfo;
-                        const response = await fetch(`http://localhost:5001/api/posts/${postId}`, {
+                        const response = await fetch(`http://51.21.171.18:5001/api/posts/${postId}`, {
                             method: 'DELETE',
                             headers: { 'Authorization': `Bearer ${token}` }
                         });

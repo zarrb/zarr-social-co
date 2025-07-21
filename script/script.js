@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fetchMyBrandDetails = async () => {
         try {
             const { token } = userInfo;
-            const response = await fetch('http://localhost:5001/api/users/mybrand', {
+            const response = await fetch('http://51.21.171.18:5001/api/users/mybrand', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!response.ok) throw new Error('Could not fetch brand details.');
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const { token } = userInfo;
             const cacheBust = `t=${new Date().getTime()}`;
-            const response = await fetch(`http://localhost:5001/api/posts?${cacheBust}`, {
+            const response = await fetch(`http://51.21.171.18:5001/api/posts?${cacheBust}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!response.ok) {
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fetchProductsFromAPI = async (searchTerm = '') => {
         try {
             const { token } = userInfo;
-            let apiUrl = 'http://localhost:5001/api/products';
+            let apiUrl = 'http://51.21.171.18:5001/api/products';
             if (searchTerm) {
                 apiUrl += `?search=${encodeURIComponent(searchTerm)}`;
             }
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('file', file);
         try {
             const { token } = userInfo;
-            const response = await fetch('http://localhost:5001/api/upload', {
+            const response = await fetch('http://51.21.171.18:5001/api/upload', {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
                 body: formData,
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showCustomMessage("Syncing products from Shopify... Please wait.", 10000);
         try {
             const { token } = userInfo;
-            const response = await fetch('http://localhost:5001/api/products/sync', {
+            const response = await fetch('http://51.21.171.18:5001/api/products/sync', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
             });
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
         container.innerHTML = recentPosts.map(post => `
             <div class="recent-post-row" data-post-id="${post._id}">
                 <div class="post-cell post-info-cell">
-                    <img src="http://localhost:5001${post.mediaUrls[0]}" class="post-thumbnail-table" onerror="this.src='https://placehold.co/45x45/eeeeee/cccccc?text=Img';">
+                    <img src="http://51.21.171.18:5001${post.mediaUrls[0]}" class="post-thumbnail-table" onerror="this.src='https://placehold.co/45x45/eeeeee/cccccc?text=Img';">
                     <span class="post-title-table">${(post.caption || 'No Caption').substring(0, 50)}...</span>
                 </div>
                 <div class="post-cell metric-cell">${(post.analytics?.likes || 0).toLocaleString()}</div>
@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="spotlight-posts-list">
                     <div class="spotlight-card" data-post-id="${topLikedPost._id}">
                         <div class="spotlight-post-info">
-                            <img src="http://localhost:5001${topLikedPost.mediaUrls[0]}" onerror="this.src='https://placehold.co/40x40/eeeeee/cccccc?text=Img';">
+                            <img src="http://51.21.171.18:5001${topLikedPost.mediaUrls[0]}" onerror="this.src='https://placehold.co/40x40/eeeeee/cccccc?text=Img';">
                             <span class="spotlight-post-title">${(topLikedPost.caption || 'No Caption').substring(0, 50)}...</span>
                         </div>
                         <div class="spotlight-metric">
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         try {
             const { token } = userInfo;
-            const response = await fetch('http://localhost:5001/api/posts', {
+            const response = await fetch('http://51.21.171.18:5001/api/posts', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(postData)
@@ -449,12 +449,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('panel-open');
         try {
             const { token } = userInfo;
-            const response = await fetch(`http://localhost:5001/api/posts/${postId}`, {
+            const response = await fetch(`http://51.21.171.18:5001/api/posts/${postId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!response.ok) throw new Error('Could not fetch post details.');
             const postData = await response.json();
-            mediaContainer.innerHTML = `<img src="http://localhost:5001${postData.mediaUrls[0]}" onerror="this.src='https://placehold.co/400x400/eeeeee/cccccc?text=Media';">`;
+            mediaContainer.innerHTML = `<img src="http://51.21.171.18:5001${postData.mediaUrls[0]}" onerror="this.src='https://placehold.co/400x400/eeeeee/cccccc?text=Media';">`;
             captionEl.textContent = postData.caption || 'No caption provided.';
             if (postData.linkedProducts && postData.linkedProducts.length > 0) {
                 productsGrid.innerHTML = postData.linkedProducts.map(product => {

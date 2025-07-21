@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fetchDrafts = async () => {
         try {
             const { token } = userInfo;
-            const url = `http://localhost:5001/api/posts?status=draft`;
+            const url = `http://51.21.171.18:5001/api/posts?status=draft`;
 
             const response = await fetch(url, {
                 headers: { 'Authorization': `Bearer ${token}` }
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             row.innerHTML = `
                 <td class="col-thumbnail">
-                    <img src="http://localhost:5001${draft.mediaUrls[0]}" alt="Thumbnail" onerror="this.src='https://placehold.co/45x45/eeeeee/cccccc?text=Draft';">
+                    <img src="http://51.21.171.18:5001${draft.mediaUrls[0]}" alt="Thumbnail" onerror="this.src='https://placehold.co/45x45/eeeeee/cccccc?text=Draft';">
                 </td>
                 <td class="col-title" title="${draft.caption || ''}">
                     ${(draft.caption || 'No Caption').substring(0, 70)}...
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (confirm('Are you sure you want to publish this draft?')) {
                     try {
                         const { token } = userInfo;
-                        const response = await fetch(`http://localhost:5001/api/posts/${postId}/publish`, {
+                        const response = await fetch(`http://51.21.171.18:5001/api/posts/${postId}/publish`, {
                             method: 'PUT',
                             headers: { 'Authorization': `Bearer ${token}` }
                         });
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (confirm('Are you sure you want to delete this draft?')) {
                     try {
                         const { token } = userInfo;
-                        const response = await fetch(`http://localhost:5001/api/posts/${postId}`, {
+                        const response = await fetch(`http://51.21.171.18:5001/api/posts/${postId}`, {
                             method: 'DELETE',
                             headers: { 'Authorization': `Bearer ${token}` }
                         });
@@ -174,13 +174,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const { token } = userInfo;
-            const response = await fetch(`http://localhost:5001/api/posts/${postId}`, {
+            const response = await fetch(`http://51.21.171.18:5001/api/posts/${postId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!response.ok) throw new Error('Could not fetch post details.');
             const postData = await response.json();
 
-            mediaContainer.innerHTML = `<img src="http://localhost:5001${postData.mediaUrls[0]}" onerror="this.src='https://placehold.co/400x400/eeeeee/cccccc?text=Media';">`;
+            mediaContainer.innerHTML = `<img src="http://51.21.171.18:5001${postData.mediaUrls[0]}" onerror="this.src='https://placehold.co/400x400/eeeeee/cccccc?text=Media';">`;
             captionEl.textContent = postData.caption || 'No caption provided.';
 
             if (postData.linkedProducts && postData.linkedProducts.length > 0) {
