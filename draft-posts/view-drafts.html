@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaar Admin - Manage Draft Posts</title>
+    <link rel="stylesheet" href="../css/style.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="preloader"> 
+        <div class="spinner"></div>
+    </div>
+
+    <div class="dashboard-container">
+        <header class="main-navbar">
+            <div class="navbar-left">
+                <div class="zaar-logo">
+                    <!-- In a real app, this might be a link to the homepage -->
+                    <a href="index.html">
+                        <img src="../assets/images/logo.png" alt="Zaar Logo" onerror="this.src='https://placehold.co/100x30/eeeeee/cccccc?text=Zaar+Logo'; this.onerror=null;">
+                    </a>
+                </div>
+                <div class="logo-separator"></div>
+                <div class="partner-logo">
+                    <img src="../assets/images/brand-logo.png" alt="Partner Brand Logo" onerror="this.src='https://placehold.co/100x30/eeeeee/cccccc?text=Partner+Logo'; this.onerror=null;">
+                </div>
+            </div>
+            <nav class="navbar-right">
+                <a href="#contact" class="nav-link">
+                    <i class="fas fa-headset"></i>
+                    <span>Contact Team</span>
+                </a>
+                <a href="#signout" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sign Out</span>
+                </a>
+                <!-- <a href="#contact" class="btn btn-primary nav-btn">Contact Us</a> -->
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section class="manage-posts-section dashboard-section">
+                <h2 class="section-title">Manage Draft Posts</h2>
+
+                <div class="posts-filter-bar">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon-table"></i>
+                        <input type="text" id="draftSearchInput" class="search-input-table" placeholder="Search drafts by title or caption...">
+                    </div>
+                    <div class="filter-actions">
+                        <button class="btn btn-outline" id="openDraftFilterModalBtn">
+                            <i class="fas fa-filter"></i> Filters & Sort
+                        </button>
+                         <button class="btn btn-secondary" id="clearDraftFiltersBtn">
+                            <i class="fas fa-times-circle"></i> Clear Filters
+                        </button>
+                    </div>
+                </div>
+
+                <div class="posts-table-container drafts-table-container">
+                    <table class="posts-table drafts-table"> 
+                        <thead>
+                            <tr>
+                                <th class="col-thumbnail">Thumbnail</th>
+                                <th class="col-title">Title / Caption Snippet</th>
+                                <th class="col-date">Date Saved</th>
+                                <th class="col-actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="draftsTableBody">
+                            </tbody>
+                    </table>
+                     <p id="noDraftsMessage" class="empty-posts-message" style="display: none;">No draft posts found.</p>
+                </div>
+                <div class="pagination-controls" id="draftPaginationControls">
+                    </div>
+            </section>
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>&copy; 2025 All rights reserved. Designed & Developed by Swift Studioz.</p>
+        </footer>
+    </div>
+
+    <div id="draftFilterOptionsModal" class="modal filter-modal">
+        <div class="modal-content filter-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Filter & Sort Drafts</h3>
+                <button class="modal-close-btn draft-filter-modal-close-btn" aria-label="Close filters">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="filter-group">
+                    <h4>Filter by Date Saved</h4>
+                    <div class="form-group-inline">
+                        <label for="draftFilterDateStart">From:</label>
+                        <input type="date" id="draftFilterDateStart">
+                    </div>
+                    <div class="form-group-inline">
+                        <label for="draftFilterDateEnd">To:</label>
+                        <input type="date" id="draftFilterDateEnd">
+                    </div>
+                </div>
+                 <div class="filter-group">
+                    <h4>Sort Drafts</h4>
+                    <div class="form-group">
+                        <label for="draftFilterSortBy">Sort By:</label>
+                        <select id="draftFilterSortBy">
+                            <option value="savedDate_desc">Date Saved (Newest First)</option>
+                            <option value="savedDate_asc">Date Saved (Oldest First)</option>
+                            <option value="title_asc">Title (A-Z)</option>
+                            <option value="title_desc">Title (Z-A)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary draft-filter-modal-cancel-btn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="applyDraftFiltersBtn">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="postDetailModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+            <div class="modal-body">
+                <div class="modal-media-container"></div>
+                <div class="modal-details-container">
+                    <div class="modal-caption-section">
+                        <h3 class="modal-section-title">Post Caption</h3>
+                        <p id="modalPostCaption" class="modal-caption-text"></p>
+                    </div>
+                    <div class="modal-products-section">
+                        <h3 class="modal-section-title">Linked Products</h3>
+                        <div id="modalPostProducts" class="modal-products-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="config.js"></script>
+    <script src="view-drafts.js"></script> 
+</body>
+</html>

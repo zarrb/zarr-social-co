@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaar Admin - Full Performance Analytics</title>
+    <link rel="stylesheet" href="../css/style.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    </head>
+<body>
+    <div id="preloader"> 
+        <div class="spinner"></div>
+    </div>
+
+    <div class="dashboard-container">
+        <header class="main-navbar">
+            <div class="navbar-left">
+                <div class="zaar-logo">
+                    <!-- In a real app, this might be a link to the homepage -->
+                    <a href="index.html">
+                        <img src="../assets/images/logo.png" alt="Zaar Logo" onerror="this.src='https://placehold.co/100x30/eeeeee/cccccc?text=Zaar+Logo'; this.onerror=null;">
+                    </a>
+                </div>
+                <div class="logo-separator"></div>
+                <div class="partner-logo">
+                    <img src="../assets/images/brand-logo.png" alt="Partner Brand Logo" onerror="this.src='https://placehold.co/100x30/eeeeee/cccccc?text=Partner+Logo'; this.onerror=null;">
+                </div>
+            </div>
+            <nav class="navbar-right">
+                <a href="#contact" class="nav-link">
+                    <i class="fas fa-headset"></i>
+                    <span>Contact Team</span>
+                </a>
+                <a href="#signout" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sign Out</span>
+                </a>
+                <!-- <a href="#contact" class="btn btn-primary nav-btn">Contact Us</a> -->
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section class="analytics-page-section dashboard-section">
+                <h2 class="section-title">Full Performance Analytics</h2>
+
+                <div class="date-range-selector">
+                    <button class="date-range-btn active" data-range="7">Last 7 Days</button>
+                    <button class="date-range-btn" data-range="30">Last 30 Days</button>
+                    <button class="date-range-btn" data-range="120">Last 4 Months</button>
+                    <button class="date-range-btn" data-range="180">Last 6 Months</button>
+                    <button class="date-range-btn" data-range="365">Last Year</button>
+                    </div>
+
+                <section class="kpi-overview-section dashboard-section">
+                    <h3 class="sub-section-title">Key Metrics Overview</h3>
+                    <div class="analytics-cards kpi-cards">
+                        <div class="card">
+                            <div class="card-header"><i class="fas fa-heart card-icon"></i><h4 class="card-title-small">Total Likes</h4></div>
+                            <p class="metric" id="kpiTotalLikes">0</p>
+                            <p class="kpi-comparison" id="kpiTotalLikesComparison"></p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header"><i class="fas fa-comments card-icon"></i><h4 class="card-title-small">Total Comments</h4></div>
+                            <p class="metric" id="kpiTotalComments">0</p>
+                            <p class="kpi-comparison" id="kpiTotalCommentsComparison"></p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header"><i class="fas fa-share-alt card-icon"></i><h4 class="card-title-small">Total Shares</h4></div>
+                            <p class="metric" id="kpiTotalShares">0</p>
+                            <p class="kpi-comparison" id="kpiTotalSharesComparison"></p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header"><i class="fas fa-file-alt card-icon"></i><h4 class="card-title-small">Posts Published</h4></div>
+                            <p class="metric" id="kpiTotalPosts">0</p>
+                            <p class="kpi-comparison" id="kpiTotalPostsComparison"></p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header"><i class="fas fa-users card-icon"></i><h4 class="card-title-small">Engagement Rate</h4></div>
+                            <p class="metric" id="kpiEngagementRate">0%</p>
+                            <p class="kpi-comparison" id="kpiEngagementRateComparison"></p>
+                        </div>
+                         <div class="card">
+                            <div class="card-header"><i class="fas fa-heartbeat card-icon"></i><h4 class="card-title-small">Avg. Likes/Post</h4></div>
+                            <p class="metric" id="kpiAvgLikes">0</p>
+                        </div>
+                         <div class="card">
+                            <div class="card-header"><i class="fas fa-comment-alt card-icon"></i><h4 class="card-title-small">Avg. Comments/Post</h4></div>
+                            <p class="metric" id="kpiAvgComments">0</p>
+                        </div>
+                         <div class="card">
+                            <div class="card-header"><i class="fas fa-retweet card-icon"></i><h4 class="card-title-small">Avg. Shares/Post</h4></div>
+                            <p class="metric" id="kpiAvgShares">0</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="engagement-trends-section dashboard-section">
+                    <h3 class="sub-section-title">Engagement Trends</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="engagementTrendChart"></canvas>
+                    </div>
+                </section>
+
+                <section class="content-performance-section dashboard-section">
+                    <h3 class="sub-section-title">Content Performance</h3>
+                    <div class="content-analysis-layout">
+                        <div class="content-type-breakdown insight-card">
+                            <h4 class="insight-card-title-small">Content Type Mix</h4>
+                            <div class="chart-container-donut">
+                                <canvas id="contentTypeChart"></canvas>
+                            </div>
+                            <div id="contentTypeSummary" class="chart-summary-list">
+                                </div>
+                        </div>
+                        <div class="top-posts-list insight-card">
+                            <h4 class="insight-card-title-small">Top Performing Posts</h4>
+                            <div id="topPerformingPostsContainer">
+                                </div>
+                        </div>
+                    </div>
+                </section>
+                
+                </section>
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>&copy; 2025 All rights reserved. Designed & Developed by Swift Studioz.</p>
+        </footer>
+    </div>
+    
+    <div id="postDetailModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+            <div class="modal-body">
+                <div class="modal-media-container"></div>
+                <div class="modal-details-container">
+                    <div class="modal-caption-section">
+                        <h3 class="modal-section-title">Post Caption</h3>
+                        <p id="modalPostCaption" class="modal-caption-text"></p>
+                    </div>
+                    <div class="modal-products-section">
+                        <h3 class="modal-section-title">Linked Products</h3>
+                        <div id="modalPostProducts" class="modal-products-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="config.js"></script>
+
+    <script src="view-analytics.js"></script> 
+</body>
+</html>

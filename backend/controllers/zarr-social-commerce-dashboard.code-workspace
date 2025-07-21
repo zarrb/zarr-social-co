@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "zarr-social-commerce-dashboard",
+			"path": "../.."
+		},
+		{
+			"name": "zarr-admin-panel",
+			"path": "../../../zarr-admin-panel"
+		}
+	],
+	"settings": {}
+}

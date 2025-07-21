@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaar Admin - Product Analytics</title>
+    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Add specific styles for this page if needed */
+        .product-info-cell {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .product-thumbnail-table {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .product-name-table {
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader"> 
+        <div class="spinner"></div>
+    </div>
+
+    <div class="dashboard-container">
+        <header class="main-navbar">
+            <div class="navbar-left">
+                <div class="zaar-logo">
+                    <a href="index.html">
+                        <img src="assets/images/logo.png" alt="Zaar Logo" onerror="this.src='https://placehold.co/100x30/eeeeee/cccccc?text=Zaar+Logo';">
+                    </a>
+                </div>
+                <div class="logo-separator"></div>
+                <div class="partner-logo">
+                    <img src="assets/images/brand-logo.png" alt="Partner Brand Logo" onerror="this.src='https://placehold.co/100x30/eeeeee/cccccc?text=Partner+Logo';">
+                </div>
+            </div>
+            <nav class="navbar-right">
+                <a href="index.html" class="nav-link"> <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#signout" class="nav-link" id="signOutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sign Out</span>
+                </a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section class="manage-posts-section dashboard-section">
+                <h2 class="section-title">Product Performance Analytics</h2>
+                <p style="margin-top: -20px; margin-bottom: 30px; color: var(--text-secondary);">Aggregated performance of your products across all posts.</p>
+                
+                <div class="posts-table-container">
+                    <table class="posts-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th class="metric-col">Quick View Clicks</th>
+                                <th class="metric-col">Website Clicks</th>
+                                <th class="metric-col">CTR (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productAnalyticsTableBody">
+                            </tbody>
+                    </table>
+                    <p id="noProductsMessage" class="empty-posts-message" style="display: none;">
+                        No product performance data available yet. Clicks from the social feed will appear here.
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>&copy; 2025 All rights reserved. Designed & Developed by Swift Studioz.</p>
+        </footer>
+    </div>
+    <script src="config.js"></script>
+    <script src="product-analytics.js"></script> 
+</body>
+</html>

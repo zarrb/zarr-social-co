@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaar Admin - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Specific styles for the login page */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--background-main);
+        }
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            background-color: var(--background-content);
+            box-shadow: var(--shadow-soft);
+            border-radius: 12px;
+            text-align: center;
+        }
+        .login-logo img {
+            height: 45px;
+            margin-bottom: 25px;
+        }
+        .login-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        .login-subtitle {
+            font-size: 1em;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+        .login-form .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .login-form label {
+            display: block;
+            font-size: 0.9em;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+        .login-form .input-wrapper {
+            position: relative;
+        }
+        .login-form .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+        .login-form .form-control {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .login-form .form-control:focus {
+            outline: none;
+            border-color: var(--zaar-deep-bronze);
+            box-shadow: 0 0 0 3px rgba(187, 153, 53, 0.15);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            background-color: var(--zaar-deep-bronze);
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .login-btn:hover {
+            background-color: var(--zaar-golden);
+            color: var(--text-primary);
+        }
+        .error-message {
+            background-color: rgba(210, 94, 65, 0.1);
+            color: var(--zaar-bold-red);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            display: none; /* Hidden by default */
+            border: 1px solid rgba(210, 94, 65, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-logo">
+            <img src="assets/images/logo.png" alt="Zaar Logo" onerror="this.src='https://placehold.co/150x45/eeeeee/cccccc?text=Zaar+Logo'; this.onerror=null;">
+        </div>
+        <h1 class="login-title">Brand Admin Login</h1>
+        <p class="login-subtitle">Access your social commerce dashboard</p>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="email" class="form-control" placeholder="e.g., admin@brand.com" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+            </div>
+            <button type="submit" class="login-btn">Sign In</button>
+        </form>
+    </div>
+    <script src="config.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>

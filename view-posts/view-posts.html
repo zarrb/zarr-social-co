@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaar Admin - Manage Posts</title>
+    <link rel="stylesheet" href="../css/style.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="preloader" class="hidden"> <div class="spinner"></div>
+    </div>
+
+    <div class="dashboard-container">
+        <header class="main-navbar">
+            <div class="navbar-left">
+                <div class="zaar-logo">
+                    <!-- In a real app, this might be a link to the homepage -->
+                    <a href="index.html">
+                        <img src="../assets/images/logo.png" alt="Zaar Logo" onerror="this.src='https://placehold.co/100x30/eeeeee/cccccc?text=Zaar+Logo'; this.onerror=null;">
+                    </a>
+                </div>
+                <div class="logo-separator"></div>
+                <div class="partner-logo">
+                    <img src="../assets/images/brand-logo.png" alt="Partner Brand Logo" onerror="this.src='https://placehold.co/100x30/eeeeee/cccccc?text=Partner+Logo'; this.onerror=null;">
+                </div>
+            </div>
+            <nav class="navbar-right">
+                <a href="#contact" class="nav-link">
+                    <i class="fas fa-headset"></i>
+                    <span>Contact Team</span>
+                </a>
+                <a href="#signout" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sign Out</span>
+                </a>
+                <!-- <a href="#contact" class="btn btn-primary nav-btn">Contact Us</a> -->
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section class="manage-posts-section dashboard-section">
+                <h2 class="section-title">Manage Posts</h2>
+
+                <div class="posts-filter-bar">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon-table"></i>
+                        <input type="text" id="postSearchInputTable" class="search-input-table" placeholder="Search by title or caption...">
+                    </div>
+                    <div class="filter-actions">
+                        <select id="postStatusFilterTable" class="filter-select">
+                            <option value="all">All Statuses</option>
+                            <option value="published">Published</option>
+                            <option value="draft">Draft</option>
+                            <option value="scheduled">Scheduled</option>
+                        </select>
+                        <button class="btn btn-outline" id="openFilterModalBtnTable">
+                            <i class="fas fa-filter"></i> Advanced Filters
+                        </button>
+                         <button class="btn btn-secondary" id="clearFiltersBtnTable">
+                            <i class="fas fa-times-circle"></i> Clear Filters
+                        </button>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="posts-table-container">
+                    <table class="posts-table">
+                        <thead>
+                            <tr>
+                                <th class="col-thumbnail">Thumbnail</th>
+                                <th class="col-title">Title / Caption Snippet</th>
+                                <th class="col-status">Status</th>
+                                <th class="col-date">Date Posted</th>
+                                <th class="metric-col col-likes">Likes</th>
+                                <th class="metric-col col-shares">Shares</th>
+                                <th class="metric-col col-comments">Comments</th>
+                                <th class="col-actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="postsTableBody">
+                            </tbody>
+                    </table>
+                     <p id="noPostsMessage" class="empty-posts-message" style="display: none;">No posts match your criteria.</p>
+                </div>
+                <div class="pagination-controls" id="paginationControlsTable">
+                    </div>
+            </section>
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>&copy; 2025 All rights reserved. Designed & Developed by Swift Studioz.</p>
+        </footer>
+    </div>
+
+    <div id="filterOptionsModal" class="modal filter-modal">
+        <div class="modal-content filter-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Advanced Filters & Sort</h3>
+                <button class="modal-close-btn filter-modal-close-btn" aria-label="Close filters">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="filter-group">
+                    <h4>Filter by Metrics (Min Value)</h4>
+                    <div class="form-group-inline">
+                        <label for="filterLikesMin">Likes:</label>
+                        <input type="number" id="filterLikesMin" placeholder="e.g., 100" min="0">
+                    </div>
+                    <div class="form-group-inline">
+                        <label for="filterCommentsMin">Comments:</label>
+                        <input type="number" id="filterCommentsMin" placeholder="e.g., 10" min="0">
+                    </div>
+                    <div class="form-group-inline">
+                        <label for="filterSharesMin">Shares:</label>
+                        <input type="number" id="filterSharesMin" placeholder="e.g., 5" min="0">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <h4>Filter by Date Posted</h4>
+                    <div class="form-group-inline">
+                        <label for="filterDateStart">From:</label>
+                        <input type="date" id="filterDateStart">
+                    </div>
+                    <div class="form-group-inline">
+                        <label for="filterDateEnd">To:</label>
+                        <input type="date" id="filterDateEnd">
+                    </div>
+                </div>
+                 <div class="filter-group">
+                    <h4>Sort Posts</h4>
+                    <div class="form-group">
+                        <label for="filterSortBy">Sort By:</label>
+                        <select id="filterSortBy">
+                            <option value="date_desc">Date (Newest First)</option>
+                            <option value="date_asc">Date (Oldest First)</option>
+                            <option value="likes_desc">Likes (Most First)</option>
+                            <option value="likes_asc">Likes (Fewest First)</option>
+                            <option value="comments_desc">Comments (Most First)</option>
+                            <option value="comments_asc">Comments (Fewest First)</option>
+                            <option value="shares_desc">Shares (Most First)</option>
+                            <option value="shares_asc">Shares (Fewest First)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary filter-modal-cancel-btn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="applyFiltersBtnTable">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="postDetailModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+            <div class="modal-body">
+                <div class="modal-media-container"></div>
+                <div class="modal-details-container">
+                    <div class="modal-caption-section">
+                        <h3 class="modal-section-title">Post Caption</h3>
+                        <p id="modalPostCaption" class="modal-caption-text"></p>
+                    </div>
+                    <div class="modal-products-section">
+                        <h3 class="modal-section-title">Linked Products</h3>
+                        <div id="modalPostProducts" class="modal-products-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="config.js"></script>
+    <script src="../script/script.js"></script>
+
+    <script src="view-posts.js"></script> 
+    </body>
+</html>
