@@ -8,30 +8,29 @@ const Brand = require('../models/brandModel');
 // @route   GET /api/posts/feed
 const getPublishedPosts = async (req, res) => {
     try {
-        // --- START: SEARCH LOGIC MODIFICATION ---
         const keyword = req.query.keyword;
-
         let searchFilter = {};
         if (keyword) {
             searchFilter = {
                 $or: [
-                    { brand: { $regex: keyword, $options: 'i' } },   // Search in brand name
-                    { caption: { $regex: keyword, $options: 'i' } } // Search in post caption
+                    { brand: { $regex: keyword, $options: 'i' } },
+                    { caption: { $regex: keyword, $options: 'i' } }
                 ]
             };
         }
-        
-        // Combine the status filter with the search filter
         const queryConditions = { status: 'published', ...searchFilter };
-        // --- END: SEARCH LOGIC MODIFICATION ---
 
+        // MODIFIED: Fetch avatarUrl and updatedAt timestamp
         const allBrands = await Brand.find({});
-        const brandLogoMap = allBrands.reduce((map, brand) => {
-            map[brand.shopifyVendorName] = brand.logoUrl;
+        const brandInfoMap = allBrands.reduce((map, brand) => {
+            map[brand.shopifyVendorName] = { 
+                logoUrl: brand.logoUrl,
+                avatarUrl: brand.avatarUrl,
+                updatedAt: brand.updatedAt // Store the timestamp
+            };
             return map;
         }, {});
 
-        // Use the combined queryConditions in the find method
         const posts = await Post.find(queryConditions)
             .sort({ createdAt: -1 })
             .populate({
@@ -41,7 +40,20 @@ const getPublishedPosts = async (req, res) => {
 
         const postsWithLogos = posts.map(post => {
             const postObject = post.toObject();
-            postObject.brandLogoUrl = brandLogoMap[post.brand] || 'assets/images/brand-logo.png';
+            const brandInfo = brandInfoMap[post.brand];
+            
+            if (brandInfo) {
+                // Choose the URL: avatar if it exists, otherwise the main logo
+                let logoToUse = brandInfo.avatarUrl || brandInfo.logoUrl;
+                
+                // THE FIX: Robust cache-busting. Checks if URL already has params.
+                const separator = logoToUse.includes('?') ? '&' : '?';
+                const cacheBuster = `v=${new Date(brandInfo.updatedAt).getTime()}`;
+                
+                postObject.brandLogoUrl = `${logoToUse}${separator}${cacheBuster}`;
+            } else {
+                postObject.brandLogoUrl = 'assets/images/brand-logo.png';
+            }
             
             postObject.linkedProducts = postObject.linkedProducts
                 .filter(lp => lp.product)
