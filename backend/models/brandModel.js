@@ -13,6 +13,12 @@ const brandSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    // --- NEW FIELD ---
+    // A smaller, square logo specifically for the social feed avatar.
+    avatarUrl: {
+        type: String,
+        // Not required, so we can have a fallback for older brands.
+    },
     // This is the crucial field for syncing products correctly.
     // It must exactly match the 'vendor' field in the client's Shopify store.
     shopifyVendorName: {
