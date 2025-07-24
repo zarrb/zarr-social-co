@@ -86,6 +86,7 @@ const updateBrand = async (req, res) => {
 
         brand.name = name || brand.name;
         brand.logoUrl = logoUrl || brand.logoUrl;
+        brand.avatarUrl = avatarUrl || brand.avatarUrl; // MODIFIED: Update avatarUrl
         brand.shopifyVendorName = shopifyVendorName || brand.shopifyVendorName;
         
         user.email = email || user.email;
