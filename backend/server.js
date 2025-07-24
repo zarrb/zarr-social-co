@@ -48,6 +48,7 @@ app.use('/api/admin', adminRoutes); // <-- 2. USE THE NEW ADMIN ROUTE
 // --- Make 'uploads' folder static ---
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// --- Add this just before app.listen(...) ---
 app.use((err, req, res, next) => {
   console.error('UNHANDLED ERROR:', err.stack);
   res.status(500).json({ message: err.message });
