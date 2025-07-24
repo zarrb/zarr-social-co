@@ -6,6 +6,8 @@ const Brand = require('../models/brandModel');
 
 // @desc    Get all published posts for the public feed
 // @route   GET /api/posts/feed
+// @desc    Get all published posts for the public feed
+// @route   GET /api/posts/feed
 const getPublishedPosts = async (req, res) => {
     try {
         const keyword = req.query.keyword;
@@ -20,13 +22,12 @@ const getPublishedPosts = async (req, res) => {
         }
         const queryConditions = { status: 'published', ...searchFilter };
 
-        // MODIFIED: Fetch avatarUrl and updatedAt timestamp
+        // Fetch brand data once
         const allBrands = await Brand.find({});
         const brandInfoMap = allBrands.reduce((map, brand) => {
-            map[brand.shopifyVendorName] = { 
-                logoUrl: brand.logoUrl,
-                avatarUrl: brand.avatarUrl,
-                updatedAt: brand.updatedAt // Store the timestamp
+            map[brand.shopifyVendorName] = {
+                smallLogo: brand.avatarUrl || brand.logoUrl, // <-- use avatar as priority
+                updatedAt: brand.updatedAt
             };
             return map;
         }, {});
@@ -41,24 +42,19 @@ const getPublishedPosts = async (req, res) => {
         const postsWithLogos = posts.map(post => {
             const postObject = post.toObject();
             const brandInfo = brandInfoMap[post.brand];
-            
+
             if (brandInfo) {
-                // Choose the URL: avatar if it exists, otherwise the main logo
-                let logoToUse = brandInfo.avatarUrl || brandInfo.logoUrl;
-                
-                // THE FIX: Robust cache-busting. Checks if URL already has params.
-                const separator = logoToUse.includes('?') ? '&' : '?';
-                const cacheBuster = `v=${new Date(brandInfo.updatedAt).getTime()}`;
-                
-                postObject.brandLogoUrl = `${logoToUse}${separator}${cacheBuster}`;
+                // small logo (avatar) first, fallback to full logo
+                postObject.brandLogoUrl = `${brandInfo.smallLogo}?v=${new Date(brandInfo.updatedAt).getTime()}`;
             } else {
                 postObject.brandLogoUrl = 'assets/images/brand-logo.png';
             }
-            
+
+            // Flatten linked products for the feed
             postObject.linkedProducts = postObject.linkedProducts
                 .filter(lp => lp.product)
                 .map(lp => lp.product);
-            
+
             return postObject;
         });
 
@@ -68,7 +64,6 @@ const getPublishedPosts = async (req, res) => {
         res.status(500).json({ message: "Server Error" });
     }
 };
-
 // @desc    Create a new post
 // @route   POST /api/posts
 const createPost = async (req, res) => {
